@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="hackerNews">
+<head>
+	<title>Hacker news comments</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style>
+	.btn-org {
+		color: #fff!important;
+		background-color: #ff6600;
+		border-color: #ff6600;
+	}
+	.btn-org:hover,
+	.btn-org:focus,
+	.btn-org.focus,
+	.btn-org:active,
+	.btn-org.active,
+	.open > .dropdown-toggle.btn-org {
+		color: #fff;
+		background-color: #ff7a22;
+		border-color: #ff7a22;
+	}
+	.btn-org:active,
+	.btn-org.active,
+	.open > .dropdown-toggle.btn-org {
+		background-image: none;
+	}
+	.btn-org.disabled,
+	.btn-org[disabled],
+	fieldset[disabled] .btn-org,
+	.btn-org.disabled:hover,
+	.btn-org[disabled]:hover,
+	fieldset[disabled] .btn-org:hover,
+	.btn-org.disabled:focus,
+	.btn-org[disabled]:focus,
+	fieldset[disabled] .btn-org:focus,
+	.btn-org.disabled.focus,
+	.btn-org[disabled].focus,
+	fieldset[disabled] .btn-org.focus,
+	.btn-org.disabled:active,
+	.btn-org[disabled]:active,
+	fieldset[disabled] .btn-org:active,
+	.btn-org.disabled.active,
+	.btn-org[disabled].active,
+	fieldset[disabled] .btn-org.active {
+		background-color: #ffb686;
+		border-color: #ffb686;
+	}
+	.pagination > .active > a,
+	.pagination > .active > span,
+	.pagination > .active > a:hover,
+	.pagination > .active > span:hover,
+	.pagination > .active > a:focus,
+	.pagination > .active > span:focus{
+		background-color: #ff6600 !important;
+		border-color: #ff6600;
+		color:#fff!important;
+	}
+	a{
+		color:#ff6600 !important;
+	}
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1><a href="#/">Top 100 stories on Hacker News!</a></h1>
+	<div class="panel panel-default">
+  		<div class="panel-body">
+			<div ng-view></div>
+		</div>
+	</div>
+</div>
+</body>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="app/core/angular.js"></script>
+<script src="app/core/angular-route.js"></script>
+<script src="app/core/angular-animate.js"></script>
+
+<script src="app/app.js"></script>
+<script src="app/controllers/storyController.js"></script>
+<script src="app/controllers/userController.js"></script>
+<script src="app/services/paginationFilter.js"></script>
+
+</html>

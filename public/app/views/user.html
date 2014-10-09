@@ -1,0 +1,41 @@
+<h3>{{user.id}} - <small>{{user.karma}} karma</small></h3>
+<p>member since: {{user.created * 1000 | date: 'yyyy-MM-dd'}} </p>
+<table class="table table-striped table-hover stories">
+	<thead>
+		<tr>
+			<th ng-click="doSort('score')"><h4>Score</h4></th>
+			<th ng-click="doSort('time')"><h4>Story</h4></th>
+			<th><h4>Comments</h4></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="story in stories | orderBy:sortBy:reverse | paginationFilter: currentPage*itemsPerPage | limitTo: itemsPerPage">
+			<td>{{story.score}}</td>
+			<td>
+				<a href="{{story.url}}" target="_blank">{{story.title}}</a><br/>
+				by: <a href="#/user/{{story.by}}">{{story.by}}</a> @ {{story.time * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}
+			</td>
+			<td><button class="btn btn-org disabled">Comments ({{story.kids.length || 0}})</button></td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<td colspan="3">
+			<div>
+				<ul class="pagination">
+					<li ng-class="prevPageDisabled()">
+					<a href ng-click="prevPage()">« Prev</a>
+					</li>
+					<li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+					<a href="">{{n+1}}</a>
+					</li>
+					<li ng-class="nextPageDisabled()">
+					<a href ng-click="nextPage()">Next »</a>
+					</li>
+					<li ng-class="hideShowAll">
+					<a href ng-click="showAll()">Show All</a>
+					</li>
+				</ul>
+			</div>
+		</td>
+		</tfoot>
+</table>
