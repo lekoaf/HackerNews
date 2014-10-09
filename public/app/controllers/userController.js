@@ -10,11 +10,10 @@
 		$scope.hideShowAll = "active";
 
 		$http.get('https://hacker-news.firebaseio.com/v0/user/'+$routeParams.uid+'.json').success(function (data){
-			$log.log(data);
 
 			$scope.user = data;
 
-			if (data.submitted.length > 0){
+			if (data.submitted && data.submitted.length > 0){
 				angular.forEach(data.submitted, function (val, key){
 					$http.get('https://hacker-news.firebaseio.com/v0/item/'+val+'.json').success(function (story){
 						if (story.type == 'story'){

@@ -16,7 +16,7 @@
 				<a href="{{story.url}}" target="_blank">{{story.title}}</a><br/>
 				by: <a href="#/user/{{story.by}}">{{story.by}}</a> @ {{story.time * 1000 | date: 'yyyy-MM-dd HH:mm:ss'}}
 			</td>
-			<td><button class="btn btn-org disabled">Comments ({{story.kids.length || 0}})</button></td>
+			<td><a href="#/story/{{story.id}}" class="btn btn-org">Comments ({{story.kids.length || 0}})</a></td>
 		</tr>
 	</tbody>
 	<tfoot>
