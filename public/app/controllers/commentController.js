@@ -13,7 +13,6 @@
 			angular.forEach(data.kids, function (val, key){
 				$http.get('https://hacker-news.firebaseio.com/v0/item/'+val+'.json')
 				.success(function (items){
-					$log.log(items);
 					$scope.comments.push(items);
 
 				}).error(function (data, status, header, config){

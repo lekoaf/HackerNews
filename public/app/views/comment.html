@@ -1,5 +1,5 @@
-<h2><a href="{{story.url}}" target="_blank">{{story.title}}</a> <small>({{story.score}} karma)<br/>
-by: <a href="#/user/{{story.by}}">{{story.by}}</a> @ {{story.time * 1000 | date: 'yyyy-MM-dd HH:mm'}}</small></h2>
+<h3><a href="{{story.url}}" target="_blank">{{story.title}}</a> <small>({{story.score}} karma)<br/>
+by: <a href="#/user/{{story.by}}">{{story.by}}</a> @ {{story.time * 1000 | date: 'yyyy-MM-dd HH:mm'}}</small></h3>
 <div ng-repeat="comment in comments">
 	{{comment.text}}<br/><br/><br/><br/>
 </div>
