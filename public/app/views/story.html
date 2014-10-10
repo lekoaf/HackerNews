@@ -1,13 +1,13 @@
 <table class="table table-striped table-hover stories">
 	<thead>
 		<tr>
-			<th ng-click="doSort('score')"><h4><a href="">Score</a></h4></th>
-			<th ng-click="doSort('time')"><h4><a href="">Story</a></h4></th>
+			<th><h4><a href="" ng-click="doSort('score')">Score</a></h4></th>
+			<th><h4><a href="" ng-click="doSort('time')">Story</a> - <a href="" ng-click="refresh()"><i ng-class="{'fa-spin': refreshSpin}"class="fa fa-refresh" title="Refresh"></i></a></h4></th>
 			<th><h4>Comments</h4></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="story in stories | orderBy:sortBy:reverse | paginationFilter: currentPage*itemsPerPage | limitTo: itemsPerPage">
+		<tr ng-repeat="story in stories | orderBy:sortBy:reverse | paginationFilter: currentPage*itemsPerPage | limitTo: itemsPerPage track by $index">
 			<td ng-if="story.score >= 200"><b>{{story.score}}</b></td>
 			<td ng-if="story.score < 200">{{story.score}}</td>
 			<td>

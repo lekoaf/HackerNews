@@ -1,31 +1,47 @@
 (function (){
 
 	angular.module('hackerNews')
-	.controller('storyController', ['$scope', '$http', '$log', function ($scope, $http, $log){
-
-		$scope.stories = JSON.parse(sessionStorage.getItem('hnStories')) || [];
+	.controller('storyController', ['$scope', '$http', '$log', '$timeout', 
+	function ($scope, $http, $log, $timeout){
+		$scope.stories = [];
 		$scope.itemsPerPage = 12;
 		$scope.currentPage = 0;
 		//$scope.sortBy = '-time';
 		$scope.hideShowAll = "active";
+		$scope.refreshSpin = false;
 
-		if (!$scope.stories.length){
-			$http.get('https://hacker-news.firebaseio.com/v0/topstories.json').success(function (stories){
-				angular.forEach(stories, function (val, key){
-					$http.get('https://hacker-news.firebaseio.com/v0/item/'+val+'.json').success(function (story){
-						if (story.type == 'story' && story.url != undefined && story.url){
-							$scope.stories.push(story);
-							sessionStorage.setItem('hnStories', JSON.stringify($scope.stories));
-						}
-						$scope.hideShowAll = ($scope.stories.length > $scope.itemsPerPage) ? "active" : "disabled";
-					}).error(function (data, status, header, config){
-						$log.log(data);
+		function init(){
+			$scope.stories = JSON.parse(sessionStorage.getItem('hnStories')) || [];
+			if (!$scope.stories.length){
+				$scope.refreshSpin = true;
+				$http.get('https://hacker-news.firebaseio.com/v0/topstories.json').success(function (stories){
+					angular.forEach(stories, function (val, key){
+						$http.get('https://hacker-news.firebaseio.com/v0/item/'+val+'.json').success(function (story){
+							if (story.type == 'story' && story.url != undefined && story.url){
+								$scope.stories.push(story);
+								sessionStorage.setItem('hnStories', JSON.stringify($scope.stories));
+								$timeout(function(){
+									$scope.refreshSpin = false;
+								}, 3000);
+							}
+							$scope.hideShowAll = ($scope.stories.length > $scope.itemsPerPage) ? "active" : "disabled";
+						}).error(function (data, status, header, config){
+							$log.log(data);
+							$scope.refreshSpin = false;
+						});
 					});
-				});
-			}).error(function (data, status, header, config){
-				$log.log(data);
-			});		
-		}	
+				}).error(function (data, status, header, config){
+					$log.log(data);
+					$scope.refreshSpin = false;
+				});		
+			}
+		}
+		init();
+
+		$scope.refresh = function(){
+			sessionStorage.removeItem('hnStories');
+			init();
+		};
 
 		// Sorting
 		$scope.doSort = function(propName) {
