@@ -4,7 +4,7 @@
 	function ($scope, $http, $log, $routeParams){
 		$scope.user = {};
 		$scope.stories = [];
-		$scope.itemsPerPage = 12;
+		$scope.itemsPerPage = 10;
 		$scope.currentPage = 0;
 		//$scope.sortBy = '-time';
 		$scope.hideShowAll = "active";
