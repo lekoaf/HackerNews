@@ -1,6 +1,5 @@
 var express = require('express');
 var http = require('http');
-var nodemailer = require('nodemailer');
 var bodyParser = require('body-parser');
 
 var app = express();
