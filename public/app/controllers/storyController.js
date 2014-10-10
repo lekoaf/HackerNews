@@ -2,26 +2,30 @@
 
 	angular.module('hackerNews')
 	.controller('storyController', ['$scope', '$http', '$log', function ($scope, $http, $log){
-		$scope.stories = [];
+
+		$scope.stories = JSON.parse(sessionStorage.getItem('hnStories')) || [];
 		$scope.itemsPerPage = 12;
 		$scope.currentPage = 0;
 		//$scope.sortBy = '-time';
 		$scope.hideShowAll = "active";
 
-		$http.get('https://hacker-news.firebaseio.com/v0/topstories.json').success(function (stories){
-			angular.forEach(stories, function (val, key){
-				$http.get('https://hacker-news.firebaseio.com/v0/item/'+val+'.json').success(function (story){
-					if (story.type == 'story' && story.url != undefined && story.url){
-						$scope.stories.push(story);
-					}
-					$scope.hideShowAll = ($scope.stories.length > $scope.itemsPerPage) ? "active" : "disabled";
-				}).error(function (data, status, header, config){
-					$log.log(data);
+		if (!$scope.stories.length){
+			$http.get('https://hacker-news.firebaseio.com/v0/topstories.json').success(function (stories){
+				angular.forEach(stories, function (val, key){
+					$http.get('https://hacker-news.firebaseio.com/v0/item/'+val+'.json').success(function (story){
+						if (story.type == 'story' && story.url != undefined && story.url){
+							$scope.stories.push(story);
+							sessionStorage.setItem('hnStories', JSON.stringify($scope.stories));
+						}
+						$scope.hideShowAll = ($scope.stories.length > $scope.itemsPerPage) ? "active" : "disabled";
+					}).error(function (data, status, header, config){
+						$log.log(data);
+					});
 				});
-			});
-		}).error(function (data, status, header, config){
-			$log.log(data);
-		});
+			}).error(function (data, status, header, config){
+				$log.log(data);
+			});		
+		}	
 
 		// Sorting
 		$scope.doSort = function(propName) {
